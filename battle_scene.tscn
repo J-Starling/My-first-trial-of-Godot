@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://dawpeskib0eet"]
+
+[ext_resource type="Script" uid="uid://b1si3s8omwgdx" path="res://fighter.gd" id="1_r5l0u"]
+[ext_resource type="Texture2D" uid="uid://bj2o5784pcsx" path="res://icon.svg" id="2_5g7vw"]
+[ext_resource type="Texture2D" uid="uid://belgwisn48x5r" path="res://player.png" id="3_gf131"]
+[ext_resource type="Texture2D" uid="uid://df561udrdh5ip" path="res://slime.png" id="4_sl17i"]
+[ext_resource type="Script" uid="uid://cso1v5i6x1yfa" path="res://battle_manager.gd" id="5_x5h4l"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sl17i"]
+bg_color = Color(0.11364063, 0.72703654, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gf131"]
+bg_color = Color(1, 0.35121626, 0.19659582, 1)
+
+[node name="BattleScene" type="Node2D" unique_id=1734332625]
+
+[node name="Fighter" type="Node" parent="." unique_id=504146598]
+script = ExtResource("1_r5l0u")
+
+[node name="Sprite2D" type="Sprite2D" parent="Fighter" unique_id=1776717358]
+visible = false
+position = Vector2(70, 310)
+texture = ExtResource("2_5g7vw")
+
+[node name="Player" type="Node" parent="." unique_id=2124470538]
+script = ExtResource("1_r5l0u")
+character_name = "Палыч"
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=2056073571]
+position = Vector2(212, 236.00003)
+scale = Vector2(1.3273555, 1.4803922)
+texture = ExtResource("3_gf131")
+
+[node name="Enemy" type="Node" parent="." unique_id=1524331128]
+script = ExtResource("1_r5l0u")
+character_name = "Слизень"
+max_hp = 80
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy" unique_id=1783514069]
+position = Vector2(1000, 342)
+scale = Vector2(0.90463084, 1.2919868)
+texture = ExtResource("4_sl17i")
+
+[node name="CanvasLayer" type="Node2D" parent="." unique_id=1336868044]
+
+[node name="AttackButton" type="Button" parent="CanvasLayer" unique_id=1100766913]
+offset_left = 529.0
+offset_top = 536.0
+offset_right = 709.0
+offset_bottom = 615.0
+text = "Атаковать!"
+
+[node name="PlayerHPBar" type="ProgressBar" parent="CanvasLayer" unique_id=726297816]
+offset_left = 32.0
+offset_top = 506.0
+offset_right = 392.0
+offset_bottom = 583.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_sl17i")
+step = 1.0
+value = 100.0
+
+[node name="EnemyHPBar" type="ProgressBar" parent="CanvasLayer" unique_id=946258424]
+offset_left = 880.0
+offset_top = 510.0
+offset_right = 1119.0
+offset_bottom = 580.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_gf131")
+max_value = 80.0
+step = 1.0
+value = 80.0
+
+[node name="BattleLog" type="RichTextLabel" parent="CanvasLayer" unique_id=1412410116]
+offset_left = 506.0
+offset_top = 47.0
+offset_right = 788.0
+offset_bottom = 326.0
+text = "Начало боя!"
+scroll_following = true
+
+[node name="BattleManager" type="Node" parent="." unique_id=856657039]
+script = ExtResource("5_x5h4l")
+
+[connection signal="pressed" from="CanvasLayer/AttackButton" to="BattleManager" method="_on_attack_button_pressed"]
+[connection signal="toggled" from="CanvasLayer/AttackButton" to="BattleManager" method="_on_attack_button_toggled"]
